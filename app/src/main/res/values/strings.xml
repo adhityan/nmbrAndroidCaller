@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">NMBR Caller</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_phone">Phone</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="NOW">now</string>
+    <string name="FEED_TIME_HOUR">%1$dh</string>
+    <string name="FEED_TIME_DAY">%1$dd</string>
+    <string name="FEED_TIME_MONTH">%1$dm</string>
+    <string name="FEED_TIME_YEAR">%1$dy</string>
+    <string name="Overlay_Activity_Title">CallerID</string>
+</resources>
