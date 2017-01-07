@@ -9,8 +9,40 @@
     <color name="nmbr_blue_trans_fifty">#8004A7C5</color>
     <color name="nmbr_blue_feedback">#0094af</color>
 
+    <color name="nmbr_grey">#aeaeae</color>
+    <color name="nmbr_grey_trans">#eeaeaeae</color>
+    <color name="nmbr_grey_trans_fifty">#80aeaeae</color>
+    <color name="nmbr_dark_grey">#4d4d4d</color>
+
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
+    <color name="nhl">#f4f4f4</color>
+    <color name="nhl_light">#f8f8f8</color>
+    <color name="nhl_lighter">#faf8f8</color>
+    <color name="nhl_trans_collection">#40f4f4f4</color>
+    <color name="collection_gradient_center">#66000000</color>
+    <color name="collection_gradient_edge">#33000000</color>
+    <color name="parallax_overlay_black_trans">#BF252935</color>
+    <color name="nhl_trans_fifty">#80f4f4f4</color>
+    <color name="nhl_trans_ninety">#e6f4f4f4</color>
+    <color name="nhl_trans_more">#18f4f4f4</color>
+    <color name="nhl_alpha">#99f4f4f4</color>
+    <color name="nhl_dark">#e4e4e4</color>
     <color name="nhl_darker">#cbcbcb</color>
+    <color name="nhl_dark_trans_ninety">#e6e4e4e4</color>
+    <color name="nhl_darker_alpha">#99cbcbcb</color>
+    <color name="nhl_darkest">#9a9a9a</color>
+    <color name="ndhl6">#8D8D8D</color>
+    <color name="ndhl5">#7D7D7D</color>
+    <color name="ndhl4">#6D6D6D</color>
+    <color name="ndhl3">#5D5D5D</color>
+    <color name="ndhl2">#4D4D4D</color>
+    <color name="ndhl">#3D3D3D</color>
+    <color name="ndark">#2D2D2D</color>
+    <color name="nhl2">#e7e7e7</color>
+    <color name="nhl1.5">#EDEDED</color>
+    <color name="unread_notification">#fffced</color>
+    <color name="ndhl7">#CBCBCB</color>
+    <color name="nmbr_darker">#1d1d1d</color>
 </resources>

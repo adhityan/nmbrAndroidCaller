@@ -31,6 +31,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        userNameView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                new OverlayDialog(HomeActivity.this, "9910314001");
+                return false;
+            }
+        });
+
         String name = prefs.getString("USER_NAME", null);
         if(name != null) userNameView.setText(String.format("Welcome %s!", name));
         else logoutButton.performClick();

@@ -9,14 +9,14 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,11 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nmbr.merchant.caller.R;
+import nmbr.merchant.caller.contracts.Segment;
 import nmbr.merchant.caller.contracts.SegmentMap;
 import nmbr.merchant.caller.libs.Utilities;
 import nmbr.merchant.caller.libs.api.APICall;
 import nmbr.merchant.caller.libs.api.apiInterface;
-import nmbr.merchant.caller.superclasses.NApplication;
 
 public class OverlayDialog extends Dialog implements apiInterface {
     private int uid;
@@ -50,6 +50,7 @@ public class OverlayDialog extends Dialog implements apiInterface {
     private FlowLayout segmentsHolder;
     private Context context;
     private SimpleDraweeView profilePic;
+    private LinearLayout rootLayout;
 
     public OverlayDialog(Context context, String number) {
         super(context);
@@ -67,7 +68,7 @@ public class OverlayDialog extends Dialog implements apiInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.overlay);
+        setContentView(R.layout.dialog_overlay);
         this.hide();
 
         closeButton = (ImageView)findViewById(R.id.close_button);
@@ -75,6 +76,7 @@ public class OverlayDialog extends Dialog implements apiInterface {
         nameView = (TextView)findViewById(R.id.user_name);
         segmentsHolder = (FlowLayout)findViewById(R.id.segments_holder);
         profilePic = (SimpleDraweeView)findViewById(R.id.user_image);
+        rootLayout = (LinearLayout)findViewById(R.id.dialog_overlay);
 
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,11 +96,15 @@ public class OverlayDialog extends Dialog implements apiInterface {
         new APICall(this, APICall.HOST + "userdetails.json", "userdetail", get);
     }
 
+    private void showMe() {
+        this.show();
+    }
+
     @Override
     public void apiResponse(String response, String code) {
         try {
             final JSONObject j = new JSONObject(response);
-            this.show();
+            this.showMe();
 
             final JSONObject basic = j.getJSONObject("basic");
             this.uid = basic.getInt("id");
@@ -106,7 +112,7 @@ public class OverlayDialog extends Dialog implements apiInterface {
             boolean isNameAvailable = basic.getBoolean("isNameAvailable");
             if(!isNameAvailable) nameView.setText("[Unknown]");
             else nameView.setText(basic.getString("name"));
-            phoneView.setText(basic.getString("phone"));
+            phoneView.setText(String.format("+91%s", basic.getString("phone")));
 
             this.userSegments = new ArrayList<SegmentMap>();
             JSONArray seqways = j.getJSONArray("segments");
@@ -134,24 +140,32 @@ public class OverlayDialog extends Dialog implements apiInterface {
     private void processSegments() {
         segmentsHolder.removeAllViews();
 
-        for(SegmentMap segment : userSegments) {
-            TextView text = new TextView(this.context);
-            text.setPadding(10, 5, 10, 5);
-            text.setTextColor(Color.WHITE);
-            text.setTypeface(null, Typeface.BOLD);
+        if(userSegments.size() > 0) {
+            Segment firstSegment = userSegments.get(0).segment;
+            addSingleSegment(firstSegment.name, firstSegment.color);
 
-            GradientDrawable shape = (GradientDrawable) ContextCompat.getDrawable(this.context, R.drawable.big_circle);
-            shape.mutate();
-            shape.setColor(Color.parseColor("#" + segment.segment.color));
-            text.setBackground(shape);
-
-            text.setText(segment.segment.name);
-            segmentsHolder.addView(text);
-
-            FlowLayout.LayoutParams params = (FlowLayout.LayoutParams)text.getLayoutParams();
-            params.setMargins(0,5,0,5);
-            text.setLayoutParams(params);
+            if(userSegments.size() > 1) addSingleSegment(String.format("+%d More", userSegments.size() - 1), "000000");
         }
+    }
+
+    private void addSingleSegment(String name, String color) {
+        TextView text = new TextView(this.context);
+        text.setTextSize(12);
+        text.setPadding(10, 5, 10, 5);
+        text.setTextColor(Color.WHITE);
+        text.setTypeface(null, Typeface.BOLD);
+
+        GradientDrawable shape = (GradientDrawable) ContextCompat.getDrawable(this.context, R.drawable.small_circle);
+        shape.mutate();
+        shape.setColor(Color.parseColor("#" + color));
+        text.setBackground(shape);
+
+        text.setText(name);
+        segmentsHolder.addView(text);
+
+        FlowLayout.LayoutParams params = (FlowLayout.LayoutParams)text.getLayoutParams();
+        params.setMargins(7,5,7,5);
+        text.setLayoutParams(params);
     }
 
     @Override
