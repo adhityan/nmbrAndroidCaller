@@ -37,6 +37,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody();
 
                     Utilities.logDebug("Sender: " + sender + " SMS: " + message);
+                    if(sender.length() == 10 && Utilities.isNumeric(sender)) Utilities.startOverlayService(context, sender);
                     if (!sender.toLowerCase().contains("NMBR".toLowerCase())) return;
 
                     String code = getVerificationCode(message);

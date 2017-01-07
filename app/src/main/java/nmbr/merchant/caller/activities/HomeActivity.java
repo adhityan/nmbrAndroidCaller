@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import nmbr.merchant.caller.R;
 import nmbr.merchant.caller.libs.Utilities;
-import nmbr.merchant.caller.services.OverlayService;
 import nmbr.merchant.caller.superclasses.NActivity;
 import nmbr.merchant.caller.superclasses.NApplication;
 
@@ -31,7 +30,7 @@ public class HomeActivity extends NActivity {
             }
         });
 
-        userNameView.setOnLongClickListener(new View.OnLongClickListener() {
+        /*userNameView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Intent i = new Intent(HomeActivity.this, OverlayService.class);
@@ -41,7 +40,7 @@ public class HomeActivity extends NActivity {
                 //new OverlayDialog(HomeActivity.this, "9910314001");
                 return false;
             }
-        });
+        });*/
 
         String name = prefs.getString("USER_NAME", null);
         if(name != null) userNameView.setText(String.format("Welcome %s!", name));

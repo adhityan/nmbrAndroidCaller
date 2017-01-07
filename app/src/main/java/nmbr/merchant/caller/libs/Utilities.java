@@ -2,6 +2,7 @@ package nmbr.merchant.caller.libs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -45,6 +46,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import nmbr.merchant.caller.R;
+import nmbr.merchant.caller.services.OverlayService;
 import nmbr.merchant.caller.superclasses.NApplication;
 
 public class Utilities {
@@ -740,5 +742,22 @@ public class Utilities {
         SharedPreferences.Editor editor = prefs.edit();
         editor.clear();
         editor.commit();
+    }
+
+    public static boolean isNumeric(String str)
+    {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
+
+    public static void startOverlayService(Context context, String number) {
+        Intent i = new Intent(context, OverlayService.class);
+        i.putExtra("number", number);
+        context.startService(i);
+    }
+
+    public static void stopOverlayService(Context context) {
+        Intent i = new Intent(context, OverlayService.class);
+        i.putExtra("terminate", true);
+        context.startService(i);
     }
 }

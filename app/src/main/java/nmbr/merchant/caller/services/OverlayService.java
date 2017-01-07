@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -50,30 +49,27 @@ public class OverlayService extends Service implements apiInterface {
 
     public OverlayService() { }
 
-    // Binder given to clients
-    private final IBinder mBinder = new LocalBinder();
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
 
-    /**
-     * Class used for the client Binder.  Because we know this service always
-     * runs in the same process as its clients, we don't need to deal with IPC.
-     */
-    public class LocalBinder extends Binder {
-        OverlayService getService() {
-            // Return this instance of LocalService so clients can call public methods
-            return OverlayService.this;
+    @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+
+        Boolean terminate = intent.getBooleanExtra("terminate", false);
+        if(terminate) hide();
+        else {
+            String number = intent.getStringExtra("number");
+            processNumber(number);
         }
     }
 
-    /** method for clients */
     public void processNumber(String number) {
         List<Pair<String, String>> get = new ArrayList<>(1);
         get.add(new Pair<>("phone", number));
         new APICall(this, APICall.HOST + "userdetails.json", "userdetail", get);
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
     }
 
     @Override
@@ -84,7 +80,7 @@ public class OverlayService extends Service implements apiInterface {
         params = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.y = 222;
+        params.y = 150;
         params.x = 0;
 
         setup();
@@ -113,7 +109,6 @@ public class OverlayService extends Service implements apiInterface {
                 return false;
             }
         });
-        processNumber("9910314001");
     }
 
     private void show() {
