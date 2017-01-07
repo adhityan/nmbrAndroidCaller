@@ -43,6 +43,8 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.4.2'
     compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') { transitive = true; }
+    compile 'com.afollestad.material-dialogs:core:0.9.1.0'
+    compile 'org.apmem.tools:layouts:1.10@aar'
 
     compile group: 'com.pubnub', name: 'pubnub-gson', version: '4.3.0'
 }

@@ -29,17 +29,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class APICall extends AsyncTask<Void, Void, String> {
-    private static final String apiKey = "8a18f7d9330680fed5df38803fdb0072574a196f";
+    private static final String apiKey = "4f5d4772bd3b73328ccce04d1059d1e9d7f256a3";
 
-    public static String device_id;
+    private static String device_id;
     public static String HOST = NApplication.API_HOST;
     private static double lat;
     private static double lng;
 
-    apiInterface a;
-    String url, code;
-    int status;
-    List<Pair<String, String>> get, post;
+    private apiInterface a;
+    private String url, code;
+    private int status;
+    private List<Pair<String, String>> get, post;
 
     public APICall(apiInterface a, String url, String code) {
         this(a, url, code, null);
@@ -62,32 +62,30 @@ public class APICall extends AsyncTask<Void, Void, String> {
     }
 
     public static void init(Context c) {
-        SharedPreferences prefs = c.getSharedPreferences(NApplication.SHARED_PREFERENCES_NAME, 0);
-        device_id = String.valueOf(prefs.getInt("RUID", 0));
-        Utilities.logDebug("ID:" + device_id);
+        device_id = Utilities.getMAC();
 
+        SharedPreferences prefs = c.getSharedPreferences(NApplication.SHARED_PREFERENCES_NAME, 0);
         lat = prefs.getFloat("lat", 0);
         lng = prefs.getFloat("lng", 0);
-        if (lat == 0 && lng == 0) {
-            PackageManager pm = NApplication.context.getPackageManager();
-            int hasPerm = pm.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, NApplication.context.getPackageName());
-            if (hasPerm != PackageManager.PERMISSION_GRANTED) {
-                LocationManager locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
-                Criteria criteria = new Criteria();
-                String bestProvider = locationManager.getBestProvider(criteria, false);
 
-                if (bestProvider != null) {
-                    Location currentLocation = locationManager.getLastKnownLocation(bestProvider);
+        PackageManager pm = NApplication.context.getPackageManager();
+        int hasPerm = pm.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, NApplication.context.getPackageName());
+        if (hasPerm != PackageManager.PERMISSION_GRANTED) {
+            LocationManager locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String bestProvider = locationManager.getBestProvider(criteria, false);
 
-                    if (currentLocation != null) {
-                        lat = currentLocation.getLatitude();
-                        lng = currentLocation.getLongitude();
-                    } else lat = lng = -1;
-                }
+            if (bestProvider != null) {
+                Location currentLocation = locationManager.getLastKnownLocation(bestProvider);
+
+                if (currentLocation != null) {
+                    lat = currentLocation.getLatitude();
+                    lng = currentLocation.getLongitude();
+                } else lat = lng = -1;
             }
         }
 
-        Utilities.logDebug("RUID: " + device_id);
+        Utilities.logDebug("MAC: " + device_id);
         Utilities.logDebug("Current lat: " + lat);
         Utilities.logDebug("Current lng: " + lng);
     }

@@ -3,4 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="nmbr_blue">#04A7C5</color>
+    <color name="nmbr_blue_secondary">#21A8C1</color>
+    <color name="nmbr_blue_trans_fifty">#8004A7C5</color>
+    <color name="nmbr_blue_feedback">#0094af</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="nhl_darker">#cbcbcb</color>
 </resources>

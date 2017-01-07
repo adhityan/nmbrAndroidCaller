@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NmbrHomeBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/nmbr_blue</item>
+        <item name="colorPrimaryDark">@color/nmbr_blue</item>
+        <item name="colorAccent">@color/nmbr_blue_trans_fifty</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:actionBarDivider">@null</item>
+        <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="actionMenuTextColor">@color/white</item>
+    </style>
+
+    <style name="OverlayWindow" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:dialogIcon">@null</item>
+        <item name="android:dialogTitle">false</item>
+        <item name="android:layout_margin">0dp</item>
+    </style>
+
+    <style name="NmbrActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/nmbr_blue</item>
+        <item name="colorPrimaryDark">@color/nmbr_blue</item>
+        <item name="colorAccent">@color/nmbr_blue_trans_fifty</item>
+    </style>
+</resources>

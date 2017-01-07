@@ -27,7 +27,7 @@ public class PubSub {
         pnConfiguration.setSubscribeKey(NApplication.PUBNUB_PUBLISH_KEY);
         pnConfiguration.setPublishKey(NApplication.PUBNUB_SUBSCRIBE_KEY);
         pnConfiguration.setSecretKey(NApplication.PUBNUB_SECRET_KEY);
-        pnConfiguration.setUuid(String.valueOf(NApplication.RUID));
+        pnConfiguration.setUuid(String.valueOf(NApplication.MAC_ID));
         pnConfiguration.setSecure(true);
 
         pubnub = new PubNub(pnConfiguration);

@@ -38,19 +38,19 @@ public final class NApplication extends Application {
     public static String PUBNUB_PUBLISH_KEY;
     public static String PUBNUB_SUBSCRIBE_KEY;
     public static String PUBNUB_SECRET_KEY;
-    public static int RUID;
+    public static String MAC_ID;
 
     static {
         hasInit = false;
         firstRun = true;
     }
 
-    public static void init(int RUID, String segment_api_key, String pubnub_publish_key, String pubnub_subscribe_key, String pubnub_secret_key) {
+    public static void init(String MAC_ID, String segment_api_key, String pubnub_publish_key, String pubnub_subscribe_key, String pubnub_secret_key) {
         if (hasInit) return;
         hasInit = true;
 
-        NApplication.RUID = RUID;
-        Crashlytics.setInt("RUID", RUID);
+        NApplication.MAC_ID = MAC_ID;
+        Crashlytics.setString("MAC_ID", MAC_ID);
 
         NApplication.SEGMENT_API_KEY = segment_api_key;
         NApplication.PUBNUB_PUBLISH_KEY = pubnub_publish_key;

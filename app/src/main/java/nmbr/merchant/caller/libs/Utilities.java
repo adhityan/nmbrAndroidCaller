@@ -1,5 +1,6 @@
 package nmbr.merchant.caller.libs;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -17,12 +18,16 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import org.json.JSONArray;
 
@@ -683,6 +688,50 @@ public class Utilities {
         catch (PackageManager.NameNotFoundException e) {
             Utilities.logError("Package name could not be found. FATAL", e);
             throw new RuntimeException("Package name not found");
+        }
+    }
+
+    public static void showAlertDialog(final Activity activity, String title, String message, String b1Text, MaterialDialog.SingleButtonCallback b1Click) {
+        showAlertDialog(activity, title, message, b1Text, b1Click, null, null);
+    }
+
+    public static void showAlertDialog(final Activity activity, String title, String message, String b1Text, MaterialDialog.SingleButtonCallback b1Click, String b2Text, MaterialDialog.SingleButtonCallback b2Click) {
+        if(!activity.hasWindowFocus()) return;
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity);
+        if (title != null) builder.title(title);
+        if (message != null) builder.content(message);
+
+        if(b1Text != null) {
+            builder.positiveText(b1Text);
+            builder.onPositive(b1Click);
+        }
+        if(b2Text != null) {
+            builder.negativeText(b2Text);
+            builder.onNegative(b2Click);
+        }
+        builder.show();
+    }
+
+    public static String getMAC() {
+        return Settings.Secure.getString(NApplication.context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    public static String getModelName() {
+        if(Build.MANUFACTURER.equalsIgnoreCase("unknown")) return
+                Build.MODEL + " " + Build.VERSION.RELEASE
+                        + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
+        else
+            return Build.MANUFACTURER
+                    + " " + Build.MODEL + " " + Build.VERSION.RELEASE
+                    + " " + Build.VERSION_CODES.class.getFields()[android.os.Build.VERSION.SDK_INT].getName();
+    }
+
+    public static String getIMEI() {
+        if(Build.MANUFACTURER.equalsIgnoreCase("unknown")) return "";
+        else {
+            TelephonyManager telephonyManager = (TelephonyManager) NApplication.context.getSystemService(Context.TELEPHONY_SERVICE);
+            return telephonyManager.getDeviceId();
         }
     }
 }
