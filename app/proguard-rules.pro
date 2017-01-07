@@ -59,3 +59,9 @@
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
 # ------- Pubnub end
+
+#http://stackoverflow.com/questions/14501759/proguard-errors-with-external-jar-returns-error-code-1/14502915#14502915
+-dontwarn javax.management.**
+-dontwarn javax.xml.**
+-dontwarn org.apache.**
+-dontwarn org.slf4j.**

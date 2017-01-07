@@ -33,10 +33,14 @@
 
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:label="@string/login_title"
+            android:screenOrientation="portrait"
+            android:theme="@style/NmbrActionBarTheme" />
+
         <activity
             android:name=".activities.HomeActivity"
+            android:label="@string/home_title"
+            android:screenOrientation="portrait"
             android:theme="@style/NmbrActionBarTheme">
         </activity>
 
