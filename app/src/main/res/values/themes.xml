@@ -11,12 +11,15 @@
         <item name="actionMenuTextColor">@color/white</item>
     </style>
 
-    <style name="OverlayWindow" parent="Theme.AppCompat.Dialog">
+    <style name="OverlayWindow" parent="android:Theme.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:dialogIcon">@null</item>
         <item name="android:dialogTitle">false</item>
         <item name="android:layout_margin">0dp</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:y">300dp</item>
     </style>
 
     <style name="NmbrActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">

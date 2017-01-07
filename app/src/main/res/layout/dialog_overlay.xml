@@ -6,7 +6,6 @@
     android:id="@+id/dialog_overlay"
     android:layout_width="match_parent"
     android:layout_height="175dp"
-    android:theme="@style/OverlayWindow"
     android:background="@color/nmbr_blue"
     android:orientation="vertical"
     tools:context="nmbr.merchant.caller.activities.OverlayDialog">

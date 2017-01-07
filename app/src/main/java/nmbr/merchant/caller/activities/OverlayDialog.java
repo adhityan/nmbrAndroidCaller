@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Pair;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -53,7 +55,7 @@ public class OverlayDialog extends Dialog implements apiInterface {
     private LinearLayout rootLayout;
 
     public OverlayDialog(Context context, String number) {
-        super(context);
+        super(context, R.style.OverlayWindow);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.context = context;
         this.number = number;
@@ -77,6 +79,26 @@ public class OverlayDialog extends Dialog implements apiInterface {
         segmentsHolder = (FlowLayout)findViewById(R.id.segments_holder);
         profilePic = (SimpleDraweeView)findViewById(R.id.user_image);
         rootLayout = (LinearLayout)findViewById(R.id.dialog_overlay);
+
+//        rootLayout.setOnTouchListener(new View.OnTouchListener() {
+//            private float mDx;
+//            private float mDy;
+//
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                int action = motionEvent.getAction();
+//                if (action == MotionEvent.ACTION_DOWN) {
+//                    mDx = mCurrentX - event.getRawX();
+//                    mDy = mCurrentY - event.getRawY();
+//                } else
+//                if (action == MotionEvent.ACTION_MOVE) {
+//                    mCurrentX = (int) (event.getRawX() + mDx);
+//                    mCurrentY = (int) (event.getRawY() + mDy);
+//                    OverlayDialog.this.update(mCurrentX, mCurrentY, -1, -1);
+//                }
+//                return true;
+//            }
+//        });
 
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +186,7 @@ public class OverlayDialog extends Dialog implements apiInterface {
         segmentsHolder.addView(text);
 
         FlowLayout.LayoutParams params = (FlowLayout.LayoutParams)text.getLayoutParams();
-        params.setMargins(7,5,7,5);
+        params.setMargins(0,5,10,5);
         text.setLayoutParams(params);
     }
 

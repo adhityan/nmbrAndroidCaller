@@ -2,8 +2,6 @@ package nmbr.merchant.caller.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,9 +9,11 @@ import android.widget.TextView;
 
 import nmbr.merchant.caller.R;
 import nmbr.merchant.caller.libs.Utilities;
+import nmbr.merchant.caller.services.OverlayService;
+import nmbr.merchant.caller.superclasses.NActivity;
 import nmbr.merchant.caller.superclasses.NApplication;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends NActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +34,11 @@ public class HomeActivity extends AppCompatActivity {
         userNameView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                new OverlayDialog(HomeActivity.this, "9910314001");
+                Intent i = new Intent(HomeActivity.this, OverlayService.class);
+                i.putExtra("number", "9910314001");
+                startService(i);
+
+                //new OverlayDialog(HomeActivity.this, "9910314001");
                 return false;
             }
         });
