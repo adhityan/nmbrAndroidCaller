@@ -106,8 +106,9 @@ public class LoginActivity extends NActivity implements apiInterface {
         mEmailSignInButton.setEnabled(true);
     }
 
-    private void complete() {
+    private void complete(String name) {
         SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("USER_NAME", name);
         editor.putString("USER_PHONE", mPhoneView.getText().toString());
         editor.putBoolean("USER_LOGGED_IN", true);
         editor.commit();
@@ -187,10 +188,22 @@ public class LoginActivity extends NActivity implements apiInterface {
     }
 
     private void attemptLogin() {
+        String phone = mPhoneView.getText().toString();
+        if(phone.length() != 10) {
+            Toast.makeText(this, "Phone number must be 10 digits.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String password = mPasswordView.getText().toString();
+        if(password.length() < 4) {
+            Toast.makeText(this, "Password is minimum 4 characters.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         showProgress(true);
         List<Pair<String, String>> post = new ArrayList<>(2);
-        post.add(new Pair<>("phone", mPhoneView.getText().toString()));
-        post.add(new Pair<>("password", mPasswordView.getText().toString()));
+        post.add(new Pair<>("phone", phone));
+        post.add(new Pair<>("password", password));
         new APICall(this, APICall.HOST + "getloginoptions.json", "getloginoptions", null, post);
     }
 
@@ -246,10 +259,7 @@ public class LoginActivity extends NActivity implements apiInterface {
             try {
                 JSONObject j = new JSONObject(response);
 
-                ArrayList<String> bs = new ArrayList<String>();
                 JSONArray businesses = j.getJSONArray("businessAllowed");
-
-
                 JSONObject business = businesses.getJSONObject(0);
                 int bid = business.getInt("bid");
 
@@ -265,7 +275,14 @@ public class LoginActivity extends NActivity implements apiInterface {
             }
             catch (Exception e) { Log.d("enmbr", "Login", e); }
         }
-        else if(code.equalsIgnoreCase("merchantlogin")) { complete(); }
+        else if(code.equalsIgnoreCase("merchantlogin")) {
+            try {
+                JSONObject j = new JSONObject(response);
+                JSONObject admin = j.getJSONObject("admin");
+                complete(admin.getString("name"));
+            }
+            catch (Exception e) { Log.d("enmbr", "Login", e); }
+        }
     }
 
     @Override

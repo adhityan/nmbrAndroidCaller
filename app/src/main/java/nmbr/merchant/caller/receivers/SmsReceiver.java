@@ -3,6 +3,7 @@ package nmbr.merchant.caller.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 
@@ -12,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nmbr.merchant.caller.libs.Utilities;
+import nmbr.merchant.caller.superclasses.NApplication;
 
 /**
  * Created by Adhityan on 01/02/2016.
@@ -19,7 +21,10 @@ import nmbr.merchant.caller.libs.Utilities;
 public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Utilities.logDebug("THERE");
+        SharedPreferences prefs = context.getSharedPreferences(NApplication.SHARED_PREFERENCES_NAME, 0);
+        boolean userLoggedIn = prefs.getBoolean("USER_LOGGED_IN", false);
+        if(!userLoggedIn) return;
+
         final Bundle bundle = intent.getExtras();
         try {
             if (bundle != null) {
@@ -32,7 +37,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     String message = currentMessage.getDisplayMessageBody();
 
                     Utilities.logDebug("Sender: " + sender + " SMS: " + message);
-                    //if (!sender.toLowerCase().contains("NMBR".toLowerCase())) return;
+                    if (!sender.toLowerCase().contains("NMBR".toLowerCase())) return;
 
                     String code = getVerificationCode(message);
                     if(code == null) return;

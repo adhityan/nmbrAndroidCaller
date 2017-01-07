@@ -18,4 +18,5 @@
     <string name="FEED_TIME_MONTH">%1$dm</string>
     <string name="FEED_TIME_YEAR">%1$dy</string>
     <string name="Overlay_Activity_Title">CallerID</string>
+    <string name="action_sign_out">Logout</string>
 </resources>

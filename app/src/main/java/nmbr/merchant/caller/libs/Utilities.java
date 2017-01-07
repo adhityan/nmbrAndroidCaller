@@ -2,6 +2,7 @@ package nmbr.merchant.caller.libs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -733,5 +734,11 @@ public class Utilities {
             TelephonyManager telephonyManager = (TelephonyManager) NApplication.context.getSystemService(Context.TELEPHONY_SERVICE);
             return telephonyManager.getDeviceId();
         }
+    }
+
+    public static void clearSharedPreferences(SharedPreferences prefs) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.commit();
     }
 }
