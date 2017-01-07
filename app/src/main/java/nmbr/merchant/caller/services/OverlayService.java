@@ -32,6 +32,7 @@ import org.apmem.tools.layouts.FlowLayout;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,6 +173,8 @@ public class OverlayService extends Service implements apiInterface {
             final TextView phoneView = (TextView)overlay.findViewById(R.id.user_phone);
             final SimpleDraweeView profilePic = (SimpleDraweeView)overlay.findViewById(R.id.user_image);
             final FlowLayout segmentsHolder = (FlowLayout)overlay.findViewById(R.id.segments_holder);
+            final TextView visitsView = (TextView)overlay.findViewById(R.id.visits_summary);
+            final TextView historyView = (TextView)overlay.findViewById(R.id.history_summary);
 
             boolean isNameAvailable = basic.getBoolean("isNameAvailable");
             if(!isNameAvailable) nameView.setText("[Unknown]");
@@ -195,6 +198,21 @@ public class OverlayService extends Service implements apiInterface {
                 };
                 DraweeController controller = Fresco.newDraweeControllerBuilder().setControllerListener(controllerListener).setUri(Uri.parse(url)).build();
                 profilePic.setController(controller);
+            }
+
+            final JSONObject stats = j.getJSONObject("stats");
+            int totalVisits = stats.getInt("totalvisits");
+            String vistsText = totalVisits + " " + (totalVisits == 1?"visit":"visits");
+            String firstVisited = stats.getString("firstvisited");
+            visitsView.setText(MessageFormat.format("{0} since {1}", vistsText, firstVisited));
+
+            final JSONObject historyInfo = j.getJSONObject("history");
+            final JSONArray histories = historyInfo.getJSONArray("lessons");
+            if(histories.length() > 0) {
+                JSONObject history = histories.getJSONObject(0);
+                String summary = history.getString("summary");
+                String friendlyTime = history.getString("friendlyTimestamp");
+                historyView.setText(MessageFormat.format("{0} on {1}", summary, friendlyTime));
             }
 
             segmentsHolder.removeAllViews();

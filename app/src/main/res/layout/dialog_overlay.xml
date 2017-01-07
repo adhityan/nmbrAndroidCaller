@@ -60,12 +60,12 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/spend_history"
+                android:id="@+id/history_summary"
                 android:text="Spent 2000rs at GK1, 5 days ago"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textColor="@color/white" />
 
             <org.apmem.tools.layouts.FlowLayout
@@ -107,7 +107,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/visits_since"
+                android:id="@+id/visits_summary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/ndark"

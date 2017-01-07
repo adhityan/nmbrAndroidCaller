@@ -36,6 +36,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     String sender = currentMessage.getDisplayOriginatingAddress();
                     String message = currentMessage.getDisplayMessageBody();
 
+                    sender = sender.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
                     Utilities.logDebug("Sender: " + sender + " SMS: " + message);
                     if(sender.length() == 10 && Utilities.isNumeric(sender)) Utilities.startOverlayService(context, sender);
                     if (!sender.toLowerCase().contains("NMBR".toLowerCase())) return;

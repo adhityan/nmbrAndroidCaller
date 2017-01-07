@@ -41,6 +41,7 @@ import nmbr.merchant.caller.superclasses.NActivity;
 import nmbr.merchant.caller.superclasses.NApplication;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
+import static android.Manifest.permission.READ_SMS;
 
 /**
  * A login screen that offers login via email/password.
@@ -51,6 +52,7 @@ public class LoginActivity extends NActivity implements apiInterface {
      */
     private static final int REQUEST_READ_PHONE_STATE = 0;
     private static final int REQUEST_SYSTEM_ALERT_WINDOW = 1;
+    private static final int REQUEST_READ_SMS = 2;
 
     // UI references.
     private TextInputEditText mPhoneView;
@@ -137,6 +139,15 @@ public class LoginActivity extends NActivity implements apiInterface {
         }
 
         Utilities.logDebug("System window permissions available");
+        proceedAfterReadSmsPermissions();
+    }
+
+    private void proceedAfterReadSmsPermissions() {
+        if (!mayRequestSmsReadStatus()) {
+            return;
+        }
+
+        Utilities.logDebug("System window permissions available");
         unblockLogin();
     }
 
@@ -175,15 +186,36 @@ public class LoginActivity extends NActivity implements apiInterface {
         else return true;
     }
 
+    private boolean mayRequestSmsReadStatus() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        if (checkSelfPermission(READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        if (shouldShowRequestPermissionRationale(READ_SMS)) {
+            Snackbar.make(mPhoneView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+                            requestPermissions(new String[]{READ_SMS}, REQUEST_READ_SMS);
+                        }
+                    });
+        } else {
+            requestPermissions(new String[]{READ_SMS}, REQUEST_READ_SMS);
+        }
+        return false;
+    }
+
     /**
      * Callback received when a permissions request has been completed.
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            if (requestCode == REQUEST_READ_PHONE_STATE) {
-                proceedAfterPhoneStatePermissions();
-            }
+            if (requestCode == REQUEST_READ_PHONE_STATE) proceedAfterPhoneStatePermissions();
+            else if (requestCode == REQUEST_READ_SMS) proceedAfterReadSmsPermissions();
         }
     }
 
