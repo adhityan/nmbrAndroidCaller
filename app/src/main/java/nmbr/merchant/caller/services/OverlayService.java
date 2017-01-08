@@ -44,11 +44,14 @@ import nmbr.merchant.caller.libs.api.APICall;
 import nmbr.merchant.caller.libs.api.apiInterface;
 
 public class OverlayService extends Service implements apiInterface {
+    private Boolean overlayVisible;
     private WindowManager.LayoutParams params;
     private WindowManager windowManager;
     private LinearLayout overlay;
 
-    public OverlayService() { }
+    public OverlayService() {
+        this.overlayVisible = false;
+    }
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -113,11 +116,15 @@ public class OverlayService extends Service implements apiInterface {
     }
 
     private void show() {
-        if (overlay != null) windowManager.addView(overlay, params);
+        if (overlay != null && !this.overlayVisible) {
+            this.overlayVisible = true;
+            windowManager.addView(overlay, params);
+        }
     }
 
     private void hide() {
-        if (overlay != null) {
+        if (overlay != null && this.overlayVisible) {
+            this.overlayVisible = false;
             windowManager.removeView(overlay);
             overlay = null;
         }
