@@ -29,7 +29,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class APICall extends AsyncTask<Void, Void, String> {
-    private static final String apiKey = "4f5d4772bd3b73328ccce04d1059d1e9d7f256a3";
+    private static final String apiKey = "6d1cf80a6a3c0cdcadfe714d991baf5c";
 
     private static String device_id;
     public static String HOST = NApplication.API_HOST;
