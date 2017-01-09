@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.telephony.TelephonyManager;
 
 import nmbr.merchant.caller.libs.Utilities;
+import nmbr.merchant.caller.structs.NumberSource;
 import nmbr.merchant.caller.superclasses.NApplication;
 
 public class CallReceiver extends BroadcastReceiver {
@@ -25,10 +26,12 @@ public class CallReceiver extends BroadcastReceiver {
 
         if (stateString.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
             String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-            incomingNumber = incomingNumber.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
+            String formattedNumber = incomingNumber.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
             Utilities.logDebug("incomingNumber: ", incomingNumber);
 
-            if(incomingNumber.length() == 10 && Utilities.isNumeric(incomingNumber)) Utilities.startOverlayService(context, incomingNumber);
+            if(incomingNumber.length() == 10 && Utilities.isNumeric(incomingNumber)) {
+                Utilities.startOverlayService(context, formattedNumber, incomingNumber, NumberSource.CALL);
+            }
         }
     }
 }

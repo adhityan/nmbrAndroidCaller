@@ -47,6 +47,7 @@ import java.util.List;
 
 import nmbr.merchant.caller.R;
 import nmbr.merchant.caller.services.OverlayService;
+import nmbr.merchant.caller.structs.NumberSource;
 import nmbr.merchant.caller.superclasses.NApplication;
 
 public class Utilities {
@@ -749,9 +750,11 @@ public class Utilities {
         return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
 
-    public static void startOverlayService(Context context, String number) {
+    public static void startOverlayService(Context context, String number, String unformattedNumber, NumberSource source) {
         Intent i = new Intent(context, OverlayService.class);
         i.putExtra("number", number);
+        i.putExtra("unformattedNumber", unformattedNumber);
+        i.putExtra("source", source.toString());
         context.startService(i);
     }
 

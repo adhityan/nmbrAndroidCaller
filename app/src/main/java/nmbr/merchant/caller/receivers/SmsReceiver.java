@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nmbr.merchant.caller.libs.Utilities;
+import nmbr.merchant.caller.structs.NumberSource;
 import nmbr.merchant.caller.superclasses.NApplication;
 
 /**
@@ -36,11 +37,13 @@ public class SmsReceiver extends BroadcastReceiver {
                     String sender = currentMessage.getDisplayOriginatingAddress();
                     String message = currentMessage.getDisplayMessageBody();
 
-                    sender = sender.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
+                    String formattedNumber = sender.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
                     Utilities.logDebug("Sender: " + sender + " SMS: " + message);
-                    if(sender.length() == 10 && Utilities.isNumeric(sender)) Utilities.startOverlayService(context, sender);
-                    if (!sender.toLowerCase().contains("NMBR".toLowerCase())) return;
+                    if(sender.length() == 10 && Utilities.isNumeric(sender)) {
+                        Utilities.startOverlayService(context, formattedNumber, sender, NumberSource.SMS);
+                    }
 
+                    if (!sender.toLowerCase().contains("NMBR".toLowerCase())) return;
                     String code = getVerificationCode(message);
                     if(code == null) return;
 

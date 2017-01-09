@@ -66,13 +66,17 @@ public class OverlayService extends Service implements apiInterface {
         if(terminate) hide();
         else {
             String number = intent.getStringExtra("number");
-            processNumber(number);
+            String unformattedNumber = intent.getStringExtra("unformattedNumber");
+            String source = intent.getStringExtra("source");
+            processNumber(number, unformattedNumber, source);
         }
     }
 
-    public void processNumber(String number) {
+    public void processNumber(String number, String unformattedNumber, String source) {
         List<Pair<String, String>> get = new ArrayList<>(1);
         get.add(new Pair<>("phone", number));
+        get.add(new Pair<>("unformattedPhone", unformattedNumber));
+        get.add(new Pair<>("source", source));
         new APICall(this, APICall.HOST + "userdetails.json", "userdetail", get);
     }
 
