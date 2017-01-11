@@ -28,7 +28,7 @@ public class CallReceiver extends BroadcastReceiver {
         if (stateString.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
             String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
             String formattedNumber = incomingNumber.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
-            Utilities.logDebug("incomingNumber: ", incomingNumber);
+            Utilities.logDebug("incomingNumber: " + incomingNumber);
 
             if(incomingNumber.length() == 10 && Utilities.isNumeric(incomingNumber)) {
                 Utilities.startOverlayService(context, aid, formattedNumber, incomingNumber, NumberSource.CALL);

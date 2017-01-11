@@ -29,6 +29,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class APICall extends AsyncTask<Void, Void, String> {
+    private static boolean hasInit = false;
     private static final String apiKey = "6d1cf80a6a3c0cdcadfe714d991baf5c";
 
     private static String device_id;
@@ -62,14 +63,15 @@ public class APICall extends AsyncTask<Void, Void, String> {
     }
 
     public static void init(Context c) {
+        if(hasInit) return; hasInit = true;
         device_id = Utilities.getMAC();
 
         SharedPreferences prefs = c.getSharedPreferences(NApplication.SHARED_PREFERENCES_NAME, 0);
         lat = prefs.getFloat("lat", 0);
         lng = prefs.getFloat("lng", 0);
 
-        PackageManager pm = NApplication.context.getPackageManager();
-        int hasPerm = pm.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, NApplication.context.getPackageName());
+        PackageManager pm = c.getPackageManager();
+        int hasPerm = pm.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, c.getPackageName());
         if (hasPerm != PackageManager.PERMISSION_GRANTED) {
             LocationManager locationManager = (LocationManager) c.getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();

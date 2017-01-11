@@ -63,7 +63,9 @@ public class OverlayService extends Service implements apiInterface {
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
 
-        Boolean terminate = intent.getBooleanExtra("terminate", false);
+        Boolean terminate = true;
+        if(intent != null) terminate = intent.getBooleanExtra("terminate", false);
+
         if(terminate) hide();
         else {
             int aid = intent.getIntExtra("aid", 0);
@@ -98,6 +100,7 @@ public class OverlayService extends Service implements apiInterface {
         params.x = 0;
 
         setup();
+        APICall.init(this);
         overlay.setOnTouchListener(new View.OnTouchListener() {
             private int initialX;
             private int initialY;
