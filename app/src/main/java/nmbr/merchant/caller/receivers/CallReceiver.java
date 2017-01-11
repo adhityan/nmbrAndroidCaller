@@ -21,6 +21,7 @@ public class CallReceiver extends BroadcastReceiver {
         boolean userLoggedIn = prefs.getBoolean("USER_LOGGED_IN", false);
         if(!userLoggedIn) return;
 
+        int aid = prefs.getInt("USER_ID", 0);
         String stateString = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
         Utilities.logDebug("onCallStateChanged: " + stateString);
 
@@ -30,7 +31,7 @@ public class CallReceiver extends BroadcastReceiver {
             Utilities.logDebug("incomingNumber: ", incomingNumber);
 
             if(incomingNumber.length() == 10 && Utilities.isNumeric(incomingNumber)) {
-                Utilities.startOverlayService(context, formattedNumber, incomingNumber, NumberSource.CALL);
+                Utilities.startOverlayService(context, aid, formattedNumber, incomingNumber, NumberSource.CALL);
             }
         }
     }

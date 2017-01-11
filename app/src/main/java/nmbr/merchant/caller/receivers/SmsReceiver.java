@@ -31,6 +31,7 @@ public class SmsReceiver extends BroadcastReceiver {
             if (bundle != null) {
                 Object[] pdusObj = (Object[]) bundle.get("pdus");
                 if(pdusObj == null) return;
+                int aid = prefs.getInt("USER_ID", 0);
 
                 for (Object aPdusObj : pdusObj) {
                     SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) aPdusObj);
@@ -40,7 +41,7 @@ public class SmsReceiver extends BroadcastReceiver {
                     String formattedNumber = sender.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
                     Utilities.logDebug("Sender: " + sender + " SMS: " + message);
                     if(sender.length() == 10 && Utilities.isNumeric(sender)) {
-                        Utilities.startOverlayService(context, formattedNumber, sender, NumberSource.SMS);
+                        Utilities.startOverlayService(context, aid, formattedNumber, sender, NumberSource.SMS);
                     }
 
                     if (!sender.toLowerCase().contains("NMBR".toLowerCase())) return;

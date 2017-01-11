@@ -108,10 +108,11 @@ public class LoginActivity extends NActivity implements apiInterface {
         mEmailSignInButton.setEnabled(true);
     }
 
-    private void complete(String name, String picture) {
+    private void complete(int id, String name, String phone, String picture) {
         SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("USER_ID", id);
         editor.putString("USER_NAME", name);
-        editor.putString("USER_PHONE", mPhoneView.getText().toString());
+        editor.putString("USER_PHONE", phone);
         editor.putString("USER_IMAGE", picture);
         editor.putBoolean("USER_LOGGED_IN", true);
         editor.commit();
@@ -312,7 +313,7 @@ public class LoginActivity extends NActivity implements apiInterface {
             try {
                 JSONObject j = new JSONObject(response);
                 JSONObject admin = j.getJSONObject("admin");
-                complete(admin.getString("name"), admin.getString("photo_url"));
+                complete(admin.getInt("id"), admin.getString("name"), admin.getString("phone"), admin.getString("photo_url"));
             }
             catch (Exception e) { Log.d("enmbr", "Login", e); }
         }

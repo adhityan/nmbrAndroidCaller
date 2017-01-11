@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -65,15 +66,17 @@ public class OverlayService extends Service implements apiInterface {
         Boolean terminate = intent.getBooleanExtra("terminate", false);
         if(terminate) hide();
         else {
+            int aid = intent.getIntExtra("aid", 0);
             String number = intent.getStringExtra("number");
             String unformattedNumber = intent.getStringExtra("unformattedNumber");
             String source = intent.getStringExtra("source");
-            processNumber(number, unformattedNumber, source);
+            processNumber(aid, number, unformattedNumber, source);
         }
     }
 
-    public void processNumber(String number, String unformattedNumber, String source) {
+    public void processNumber(int aid, String number, String unformattedNumber, String source) {
         List<Pair<String, String>> get = new ArrayList<>(1);
+        get.add(new Pair<>("aid", String.valueOf(aid)));
         get.add(new Pair<>("phone", number));
         get.add(new Pair<>("unformattedPhone", unformattedNumber));
         get.add(new Pair<>("source", source));
@@ -88,7 +91,10 @@ public class OverlayService extends Service implements apiInterface {
         params = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ERROR, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.TOP | Gravity.LEFT;
-        params.y = 150;
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(metrics);
+        params.y = metrics.heightPixels - 700;
         params.x = 0;
 
         setup();
@@ -240,7 +246,7 @@ public class OverlayService extends Service implements apiInterface {
 
     @Override
     public void apiError(String message, String code) {
-        Utilities.logWarning("Get phone. API Error.");
+        Utilities.logWarning("Get phone error: " + message);
     }
 
     @Override
