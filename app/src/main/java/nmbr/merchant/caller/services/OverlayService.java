@@ -206,22 +206,20 @@ public class OverlayService extends Service implements apiInterface {
 
             String url = basic.getString("photo_url");
             if (url != null && url.length() != 0) {
-                ControllerListener<ImageInfo> controllerListener = new BaseControllerListener<ImageInfo>() {
-                    @Override
-                    public void onFinalImageSet(String id, @Nullable ImageInfo imageInfo, @Nullable Animatable anim) {
-                        if (imageInfo == null) return;
-                        profilePic.setBackground(null);
-                    }
-                };
-                DraweeController controller = Fresco.newDraweeControllerBuilder().setControllerListener(controllerListener).setUri(Uri.parse(url)).build();
+                DraweeController controller = Fresco.newDraweeControllerBuilder().setUri(Uri.parse(url)).build();
                 profilePic.setController(controller);
             }
+            else profilePic.setImageURI("");
 
             final JSONObject stats = j.getJSONObject("stats");
             int totalVisits = stats.getInt("totalvisits");
-            String vistsText = totalVisits + " " + (totalVisits == 1?"visit":"visits");
-            String firstVisited = stats.getString("firstvisited");
-            visitsView.setText(MessageFormat.format("{0} since {1}", vistsText, firstVisited));
+            if(totalVisits == 0) visitsView.setText("No visits");
+            else {
+
+                String vistsText = totalVisits + " " + (totalVisits == 1?"visit":"visits");
+                String firstVisited = stats.getString("firstvisited");
+                visitsView.setText(MessageFormat.format("{0} since {1}", vistsText, firstVisited));
+            }
 
             final JSONObject historyInfo = j.getJSONObject("history");
             final JSONArray histories = historyInfo.getJSONArray("lessons");
