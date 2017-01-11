@@ -750,9 +750,9 @@ public class Utilities {
         return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
 
-    public static void startOverlayService(Context context, int uid, String number, String unformattedNumber, NumberSource source) {
+    public static void startOverlayService(Context context, int aid, String number, String unformattedNumber, NumberSource source) {
         Intent i = new Intent(context, OverlayService.class);
-        i.putExtra("uid", uid);
+        i.putExtra("aid", aid);
         i.putExtra("number", number);
         i.putExtra("unformattedNumber", unformattedNumber);
         i.putExtra("source", source.toString());
