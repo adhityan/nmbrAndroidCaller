@@ -5,7 +5,7 @@
     android:id="@+id/dialog_overlay"
     android:layout_width="match_parent"
     android:layout_height="175dp"
-    android:background="@color/nmbr_blue"
+    android:background="@drawable/dialog_border"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,6 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="15dp"
+        android:background="@color/nmbr_blue"
         android:orientation="horizontal">
 
         <FrameLayout

@@ -40,7 +40,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
                     String formattedNumber = sender.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
                     Utilities.logDebug("Sender: " + sender + " SMS: " + message);
-                    if(sender.length() == 10 && Utilities.isNumeric(sender)) {
+                    if(formattedNumber.length() == 10 && Utilities.isNumeric(formattedNumber)) {
                         Utilities.startOverlayService(context, aid, formattedNumber, sender, NumberSource.SMS);
                     }
 

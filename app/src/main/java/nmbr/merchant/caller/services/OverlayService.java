@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
-import android.graphics.drawable.Animatable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Pair;
@@ -23,11 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.image.ImageInfo;
 
 import org.apmem.tools.layouts.FlowLayout;
 import org.json.JSONArray;
@@ -238,7 +233,7 @@ public class OverlayService extends Service implements apiInterface {
                 Segment firstSegment = userSegments.get(0).segment;
                 addSingleSegment(segmentsHolder, firstSegment.name, firstSegment.color);
 
-                if(userSegments.size() > 1) addSingleSegment(segmentsHolder, String.format("+%d More", userSegments.size() - 1), "000000");
+                if(userSegments.size() > 1) addSingleSegment(segmentsHolder, MessageFormat.format("{0} More", userSegments.size() - 1), "000000");
             }
 
             this.show();

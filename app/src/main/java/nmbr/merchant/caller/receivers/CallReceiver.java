@@ -30,7 +30,7 @@ public class CallReceiver extends BroadcastReceiver {
             String formattedNumber = incomingNumber.replace(" ", "").replace("+91", "").replace("+", "").replace("(", "").replace(")", "");
             Utilities.logDebug("incomingNumber: " + incomingNumber);
 
-            if(incomingNumber.length() == 10 && Utilities.isNumeric(incomingNumber)) {
+            if(formattedNumber.length() == 10 && Utilities.isNumeric(formattedNumber)) {
                 Utilities.startOverlayService(context, aid, formattedNumber, incomingNumber, NumberSource.CALL);
             }
         }
