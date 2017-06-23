@@ -6,17 +6,18 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
 
     defaultConfig {
         applicationId "nmbr.merchant.caller"
-        minSdkVersion 21
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        versionCode 2
+        versionName "2.0"
 
+        minSdkVersion 21
+        targetSdkVersion 26
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
     buildTypes {
@@ -41,21 +42,20 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:appcompat-v7:26.0.0-beta2'
+    compile 'com.android.support:design:26.0.0-beta2'
     testCompile 'junit:junit:4.12'
 
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.segment.analytics.android:analytics:4.+'
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.facebook.fresco:fresco:1.0.1'
-    compile 'com.facebook.fresco:imagepipeline-okhttp3:1.0.1'
-    compile 'com.google.android.gms:play-services:10.0.1'
-    compile 'com.facebook.stetho:stetho:1.4.2'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.4.2'
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') { transitive = true; }
-    compile 'com.afollestad.material-dialogs:core:0.9.2.3'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.facebook.fresco:fresco:1.3.0'
+    compile 'com.facebook.fresco:imagepipeline-okhttp3:1.3.0'
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') { transitive = true; }
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
     compile 'org.apmem.tools:layouts:1.10@aar'
 
-    compile group: 'com.pubnub', name: 'pubnub-gson', version: '4.4.2'
+    compile group: 'com.pubnub', name: 'pubnub-gson', version: '4.6.4'
 }

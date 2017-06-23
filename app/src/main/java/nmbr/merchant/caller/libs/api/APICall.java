@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.util.Pair;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,11 +89,6 @@ public class APICall extends AsyncTask<Void, Void, String> {
         Utilities.logDebug("MAC: " + device_id);
         Utilities.logDebug("Current lat: " + lat);
         Utilities.logDebug("Current lng: " + lng);
-    }
-
-    public static void updateLatLng(LatLng l) {
-        lat = l.latitude;
-        lng = l.longitude;
     }
 
     public static APIResponse call(String url) {
