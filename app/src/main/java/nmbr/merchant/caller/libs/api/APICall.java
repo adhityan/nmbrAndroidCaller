@@ -117,8 +117,12 @@ public class APICall extends AsyncTask<Void, Void, String> {
         Boolean isLatLngPresent = false;
         FormBody.Builder postBuilder = new FormBody.Builder();
         for (Pair<String, String> entry : post) {
-            postBuilder.add(entry.first, entry.second);
-            if (entry.first.equalsIgnoreCase("lat") || entry.first.equalsIgnoreCase("lng")) isLatLngPresent = true;
+            if(entry.first != null && entry.second != null) {
+                postBuilder.add(entry.first, entry.second);
+                if (entry.first.equalsIgnoreCase("lat") || entry.first.equalsIgnoreCase("lng")) {
+                    isLatLngPresent = true;
+                }
+            }
         }
 
         if (!isLatLngPresent) {

@@ -10,3 +10,4 @@
 gradle/
 gradlew.bat
 app-release.apk
+.idea
